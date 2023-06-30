@@ -10,35 +10,36 @@
          <div class="title">
             Login Form
          </div>
-         <form action="#">
+         <form action="https://aaronjoshy.github.io/thagristo.com/">
             <div class="field1">
-               <input type="text" onkeyup="return validityEmail()" placeholder="Enter Email Id" required>
-               <label for="email">: Email Address</label>
-               <span id="err"></span>
+               <label for="email">Email Address: </label>
+               <br>
+               <input type="text" onkeyup="return validityEmail()" placeholder="Enter Email Id" id="email">
+               <span id="err"> </span>
             </div>
             <div class="field2">
-                <input type="number" onkeyup="return validityPhone()"   placeholder="Enter mobile No." required>
-                <label for="number">: Number</label>
-                <span id="err1"></span>
+               <label for="number">Number: </label>
+               <br>
+                <input type="tel" onkeyup="return validityPhone()"   placeholder="Enter mobile No." id="phnNum">
+                <span id="err1"> </span>
              </div>
             <div class="field3">
-               <input type="password" onkeyup="return validPass"  placeholder="Enter Password" required>
-               <label for="password">: Password</label>
-               <span id="err2"></span>
+               <label for="password">Password: </label>
+               <br>
+               <input type="password" onkeyup="return validPass()"  placeholder="Enter your password here" id="pass">
+               <span id="err2"> </span>
             </div>
             <div class="content">
-               <div class="checkbox">
-                  <input type="checkbox" id="remember-me">
-                  <label for="remember-me">Remember me</label>
-               </div>
+               
                <div class="pass-link">
                   <a href="https://colorlib.com/cdn-cgi/image/quality=80,format=auto,onerror=redirect,metadata=none/wp/wp-content/uploads/sites/2/404-error-page-templates.jpg">Forgot password?</a>
                   
                </div>
             </div>
             <div class="field">
-               <input type="submit" href="https://www.keralatourism.org/" value="Login">
-               
+               <input type="submit" value="Login" onclick="return verify()" id="sub">
+               <span id="err3"></span>
+           
             </div>
             <div class="signup-link">
                Not a member? <a href="https://colorlib.com/cdn-cgi/image/quality=80,format=auto,onerror=redirect,metadata=none/wp/wp-content/uploads/sites/2/404-error-page-templates.jpg">Signup now</a>
