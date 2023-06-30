@@ -1,87 +1,94 @@
 function validityEmail() {
-    var emailInput = document.querySelector(".field1 input");
-    var errorSpan = document.getElementById("err");
-    var emailRege = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
-    if (emailInput.value.match(emailRege)) {
-      errorSpan.textContent = "";
+    var emailInput = document.getElementById("email");
+    var errorSpan= document.getElementById("err");
+    var regex =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    
+    if(emailInput.value.trim()==''){
+      errorSpan.textContent="Email is required";
+      errorSpan.style.color="2px solid red";
+      return false
+    }
+    else if (!emailInput.value.match(regex)) {
+      errorSpan.textContent="Email is not in correct format";
+      return false
+
+    } 
+    else {
+      errorSpan.textContent="";
       return true;
-    } else {
-      errorSpan.textContent = "Invalid Email Address";
-      return false;
     }
   }
   
   function validityPhone() {
-    var phoneInput = document.querySelector(".field2 input");
+    var phoneInput = document.getElementById("phnNum");
     var errorSpan = document.getElementById("err1");
-    var phoneRege = /^(\d{3}[-.\s]?\d{3}[-.\s]?\d{4}|\d{10})$/;
-  
-    if (phoneInput.value.match(phoneRege)) {
-      errorSpan.textContent = "";
-      return true;
-    } else {
-      errorSpan.textContent = "Invalid Mobile Number"
+    var cleanedPhoneNumber = phoneInput.value.replace(/[^\d]/g, '');
+
+    if(phoneInput.value.trim()==""){
+      errorSpan.textContent="Phone no. is required";
       return false;
+    }
+    else if(!/^[\d.\-\/\s]+$/.test(phoneInput.value)){
+      errorSpan.textContent="Only digits please";
+      return false;
+    }
+
+    else if(cleanedPhoneNumber.length !== 10){
+      errorSpan.textContent="Invalid phone number format";
+      return false;
+    }
+
+    else{
+      errorSpan.textContent='';
+      return true;
     }
   }
   
   function validPass() {
-    var passwordInput = document.querySelector(".field3 input");
+    var passwordInput = document.getElementById("pass");
     var errorSpan = document.getElementById("err2");
-    var passwordRege = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}$/;
-  
-    if (passwordInput.value.match(passwordRege)) {
-      errorSpan.textContent = "";
-      passwordStrengthIndicator(passwordInput.value);
-      return true;
-    } else {
-      errorSpan.textContent = "Try Another password";
-      passwordStrengthIndicator('');
-      return false;
-    }
+
+
+    var password = passwordInput.value;
+    var validationResult = validatePassword(password);
+
+    errorSpan.textContent = validationResult.strength;
+    errorSpan.style.color = validationResult.color;
+    return errorSpan;
   }
-  
-  function passwordStrengthIndicator(password) {
-    var strengthSpan = document.getElementById("password-strength");
-  
-    if (password === '') {
-      strengthSpan.textContent = "";
-      strengthSpan.style.backgroundColor = "transparent";
-      return;
+
+
+  function validatePassword(password) {
+    var passwordStrength = "";
+    var passwordColor = "";
+
+    if(password.length < 8){
+      passwordStrength = "minium 8 characters";
+      passwordColor = "red";
+    } 
+    else if (!/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password)) {
+      passwordStrength = "Medium";
+      passwordColor = "orange";
     }
-  
-    var strength = 0;
-  
-    if (password.length >= 8) {
-      strength++;
+    else {
+      passwordStrength = "Strong";
+      passwordColor = "green";
     }
-    if (/[a-z]/.test(password)) {
-      strength++;
-    }
-    if (/[A-Z]/.test(password)) {
-      strength++;
-    }
-    if (/\d/.test(password)) {
-      strength++;
-    }
-  
-    switch (strength) {
-      case 1:
-        strengthSpan.textContent = "Weak";
-        strengthSpan.style.backgroundColor = "red";
-        break;
-      case 2:
-        strengthSpan.textContent = "Medium";
-        strengthSpan.style.backgroundColor = "orange";
-        break;
-      case 3:
-        strengthSpan.textContent = "Strong";
-        strengthSpan.style.backgroundColor = "green";
-        break;
-      default:
-        strengthSpan.textContent = "bad ";
-        strengthSpan.style.backgroundColor = "transparent";
-        break;
+
+    return { strength: passwordStrength, color: passwordColor };
+  }
+
+  function verify(){
+    var submitError = document.getElementById('sub');
+    var subErr = document.getElementById('err3');
+
+    var passCheck = validPass();
+    if(!validityEmail() || !validityPhone() || passCheck.textContent != "Strong"){
+      console.log(`${passCheck.textContent}`)
+      subErr.style.display='block';
+      subErr.textContent="please fix the errors";
+      setTimeout(function(){subErr.style.display= 'none';}, 3000);
+      return false  
+
     }
   }
